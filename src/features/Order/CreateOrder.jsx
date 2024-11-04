@@ -7,11 +7,12 @@ import {
   useActionData,
   useNavigation,
 } from "react-router-dom";
+import Button from "../../UI/Button";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
+    str,
   );
 
 const fakeCart = [
@@ -47,19 +48,19 @@ function CreateOrder() {
   const cart = fakeCart;
 
   return (
-    <div>
+    <div className="">
       <h2>Ready to order? Lets go!</h2>
 
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input type="text" name="customer" required className="input" />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
             {formErrors?.phone && <p>{formErrors.phone} </p>}
           </div>
         </div>
@@ -67,13 +68,14 @@ function CreateOrder() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input" />
           </div>
         </div>
 
         <div>
           <input
             type="checkbox"
+            className="h-6 w-6 accent-yellow-400 focus:ring focus:ring-yellow-300 focus:ring-offset-2"
             name="priority"
             id="priority"
             // value={withPriority}
@@ -87,9 +89,9 @@ function CreateOrder() {
           use stringify to convert cart object to string to be sent to the server
            */}
           <input type="hidden" name="cart" value={JSON.stringify(cart)}></input>
-          <button disabled={isSubmitting}>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? " Placing Order.." : "Order now"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
@@ -112,8 +114,9 @@ export async function action({ request }) {
     errors.phone = "Please provide a valid number so we can contact you";
   if (Object.keys(errors).length > 0) return errors;
   //if now erros then go ahread and create order
-  const newOrder = await createOrder(order);
-  return redirect(`/order/${newOrder.id}`);
+  // const newOrder = await createOrder(order);
+  // return redirect(`/order/${newOrder.id}`);
+  return null;
 }
 
 export default CreateOrder;

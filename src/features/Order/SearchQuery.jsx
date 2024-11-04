@@ -15,9 +15,10 @@ function SearchQuery() {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="seach order #"
+        placeholder="Seach order #"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        className="block rounded-full bg-yellow-100 px-4 py-2 text-sm transition-all duration-200 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-500 sm:w-64 sm:focus:w-72"
       ></input>
     </form>
   );
