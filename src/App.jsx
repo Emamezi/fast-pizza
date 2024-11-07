@@ -16,35 +16,29 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        element: <Outlet />,
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/menu",
+        loader: menuLoader,
+        element: <Menu />,
         errorElement: <Error />,
-        children: [
-          {
-            path: "/",
-            element: <Home />,
-          },
-          {
-            path: "/menu",
-            loader: menuLoader,
-            element: <Menu />,
-            errorElement: <Error />,
-          },
-          {
-            path: "/cart",
-            element: <Cart />,
-          },
-          {
-            path: "/order/new",
-            element: <CreateOrder />,
-            action: createOrderAction,
-          },
-          {
-            path: "/order/:orderId",
-            loader: orderLoader,
-            element: <Order />,
-            // errorElement: <Error />,
-          },
-        ],
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/order/new",
+        element: <CreateOrder />,
+        action: createOrderAction,
+      },
+      {
+        path: "/order/:orderId",
+        loader: orderLoader,
+        element: <Order />,
+        errorElement: <Error />,
       },
     ],
   },
