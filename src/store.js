@@ -8,6 +8,5 @@ const store = configureStore({
     cart: cartReducer,
   },
 });
-console.log(store.getState().cart.reducer);
 
 export default store;

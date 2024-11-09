@@ -6,6 +6,8 @@ import { addToCart } from "../Cart/CartSlice";
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const cart = useSelector((state) => state.cart.cart);
+  console.log(cart);
 
   function handleAddToCart() {
     const newItem = {
@@ -15,7 +17,6 @@ function MenuItem({ pizza }) {
       price: unitPrice,
       totalPrice: unitPrice * 1,
     };
-    console.log(newItem);
     dispatch(addToCart(newItem));
   }
 
