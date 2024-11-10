@@ -31,7 +31,7 @@ const cartSlice = createSlice({
       item.totalPrice = item.quantity * item.price;
     },
     decreaseItemQty(state, action) {
-      const item = state.cart.finc((item) => item.pizzaId === action.payload);
+      const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--;
       item.totalPrice = item.quantity * item.price;
     },
@@ -51,19 +51,29 @@ export const {
 
 export default cartSlice.reducer;
 
+const selectCartItems = (state) => state.cart.cart;
 export const selectCart = createSelector(
-  [(state) => state.cart.cart],
-  (cart) => cart,
+  [(state) => state.cart],
+  (cart) => cart.cart,
 
   // (cart) => cart,
 );
 
-export const selectTotalCartQty = createSelector(
-  [(state) => state.cart.cart],
-  (cart) => cart.reduce((sum, item) => sum + item.quantity, 0),
+export const selectTotalCartQty = createSelector([selectCartItems], (cart) =>
+  cart.reduce((sum, item) => sum + item.quantity, 0),
 );
 
-export const selectTotalCartPrice = createSelector(
-  [(state) => state.cart.cart],
-  (cart) => cart.reduce((sum, item) => sum + item.totalPrice, 0),
+export const selectTotalCartPrice = createSelector([selectCartItems], (cart) =>
+  cart.reduce((sum, item) => sum + item.totalPrice, 0),
 );
+export const selectCurrentQuantityById = (id) =>
+  createSelector(
+    [selectCartItems],
+    (cart) => cart.find((item) => item.pizzaId === id)?.quantity ?? 0,
+  );
+
+export const selectItemQuantity = (id) =>
+  createSelector(
+    [selectCartItems],
+    (cart) => cart.find((item) => item.pizzaId === id).quantity,
+  );
