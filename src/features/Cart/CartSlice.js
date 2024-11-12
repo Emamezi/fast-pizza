@@ -3,17 +3,8 @@ createSelector;
 
 const initialState = {
   cart: [],
-  // cart: [
-  // {
-  //   pizzaId: 12,
-  //   name: "Mediteranian",
-  //   quantity: 2,
-  //   price: 16,
-  //   totalPrice: 32,
-  // },
-  // ],
-  //
 };
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -28,12 +19,14 @@ const cartSlice = createSlice({
     increaseItemQty(state, action) {
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity++;
-      item.totalPrice = item.quantity * item.price;
+      item.totalPrice = item.quantity * item.unitPrice;
     },
     decreaseItemQty(state, action) {
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--;
-      item.totalPrice = item.quantity * item.price;
+      item.totalPrice = item.quantity * item.unitPrice;
+      if (item.quantity === 0)
+        cartSlice.caseReducers.deleteCartItem(state, action);
     },
     clearCart(state) {
       state.cart = [];
@@ -51,13 +44,13 @@ export const {
 
 export default cartSlice.reducer;
 
-const selectCartItems = (state) => state.cart.cart;
 export const selectCart = createSelector(
   [(state) => state.cart],
   (cart) => cart.cart,
 
   // (cart) => cart,
 );
+const selectCartItems = (state) => state.cart.cart;
 
 export const selectTotalCartQty = createSelector([selectCartItems], (cart) =>
   cart.reduce((sum, item) => sum + item.quantity, 0),

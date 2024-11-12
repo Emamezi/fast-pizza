@@ -1,20 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../UI/Button";
-import { decreaseItemQty, increaseItemQty } from "./CartSlice";
+import { decreaseItemQty, increaseItemQty, selectCart } from "./CartSlice";
 
-function UpdateItemQuantity({ pizzaId }) {
-  const quantity = useSelector(
-    (state) =>
-      state.cart.cart.find((item) => item.pizzaId === pizzaId).quantity,
-  );
+function UpdateItemQuantity({ pizzaId, currentQuantity }) {
   const dispatch = useDispatch();
-
   return (
-    <div className="rounded-md bg-stone-200 px-2 py-1">
-      <Button onClick={() => dispatch(decreaseItemQty(pizzaId))}>&#43;</Button>
-      <span> {quantity}</span>
-      <Button onClick={() => dispatch(increaseItemQty(pizzaId))}>
+    <div className="flex items-center gap-1 md:gap-3">
+      <Button type="round" onClick={() => dispatch(decreaseItemQty(pizzaId))}>
         &#8722;
+      </Button>
+      <span className="text-sm font-medium"> {currentQuantity}</span>
+      <Button type="round" onClick={() => dispatch(increaseItemQty(pizzaId))}>
+        &#43;
       </Button>
     </div>
   );
